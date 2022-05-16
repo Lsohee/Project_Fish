@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    *{margin:0; padding:0;}
+    #container{width:100vw; height:100vh; background-color: rgb(125, 223, 223); display: flex;justify-content: center; align-items: center;}
+    img{position: relative; z-index: 1;}
+    #root{width:400px; height:900px; border: 1px solid black; display: flex;justify-content: center; align-items: center;position: relative; left:-450px; z-index: 2;}
+    #root>div{width:40px; height:40px; background-color: darkblue;}
+  </style>
+</head>
+<body>
+  <div id="container">
+    <img src="/img/jsTestBackgroundImg.webp" alt="test image">
+    <div id="root">
+      <div></div>
+    </div>
+  </div>
+
+
+  <script>
+    const surfer = document.querySelector("#root>div")
+    const img = document.querySelector('img');
+    console.log(surfer);
+    console.dir(img);
+    // 제대로 배경 이미지 불러옴
+    //<!--! 이제 이걸 1초마다 y축에서 마이너스 방향으로 2씩 이동하게 할 것임
+    //<!--* 어라? 이거 반복이네? 반복문을 쓰면 되겠군!
+    // 핸들러 변수 
+    // 여기다 쓰면 전역 변수아니니?
+    // let topValue = "-150px
+    // let topValue = -200;
+    img.style.top= -200+ "px";
+    // 2. 내 목적 : 이벤트가 일어 났을때 img의 top 값이 바뀌는것
+    surfer.addEventListener("click", function(){
+    // topValue = topValue+500
+    let i =0;
+    let timer =  setInterval(() => {
+      i++
+      console.log(i)
+      img.style.top= -200 + i*10+ "px";
+      // 3. 이제 뭐할거냐면, 저 10을 1초에 3씩 증가시켜서 점점더 빠르게 달리도록 할 것임
+        // 1. 제대로 1씩 늘어나는 것을 확인했으니 이제 img의 좌표에 i의 변화를 적용시키자
+        // topValue = topValue+i*10;
+      }, 500);
+    })
+    
+    
+
+    
+  </script>
+</body>
+</html>
