@@ -10,7 +10,7 @@
   </style>
 </head>
 <body>
-  <canvas id="try" style="width:400px; height:400px;"></canvas>
+  <canvas id="try" style="width:200px; height:200px;"></canvas>
 
 
   <script>
@@ -26,10 +26,18 @@
     ctx.lineTo(150,200)
     ctx.stroke();
 
+    //<!-- ? 왜 400px 400px 로 잡았는데 중앙이 200이 아닐까?
+    //<!-- ? 뒤에 그리는 원도찌그러진거 보니까 전체적으로 찌그러 졌나본디?
+
     // <!--memo 가로축
     ctx.moveTo(0,75);
     ctx.lineTo(400,75);
     ctx.stroke();
+
+    // <!--memo 원...
+      ctx.beginPath();
+ctx.arc(50, 20,25, 0, Math.PI * 2);
+ctx.stroke();
     }
   </script>
   
