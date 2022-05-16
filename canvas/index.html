@@ -21,24 +21,35 @@
     let ctx = canvas.getContext("2d");
 
     // <!--memo 세로축
-    ctx.beginPath();
-    ctx.moveTo(150,0)
-    ctx.lineTo(150,200)
-    ctx.stroke();
+    // ctx.beginPath();
+    // ctx.moveTo(150,0)
+    // ctx.lineTo(150,200)
+    // ctx.stroke();
 
     //<!-- ? 왜 400px 400px 로 잡았는데 중앙이 200이 아닐까?
     //<!-- ? 뒤에 그리는 원도찌그러진거 보니까 전체적으로 찌그러 졌나본디?
 
     // <!--memo 가로축
-    ctx.moveTo(0,75);
-    ctx.lineTo(400,75);
-    ctx.stroke();
+    // ctx.moveTo(0,75);
+    // ctx.lineTo(400,75);
+    // ctx.stroke();
 
-    // <!--memo 원...
+    // <!--memo ㅇ...
       ctx.beginPath();
-ctx.arc(50, 20,25, 0, Math.PI * 2);
-ctx.stroke();
+      ctx.arc(50, 50,20, 0, Math.PI * 2);
+      ctx.stroke();
+
+    // <!--memo ㅣ...
+      ctx.beginPath();
+      ctx.moveTo(100,30);
+      ctx.lineTo(100,70)
+      ctx.stroke();
+
+    // <!--memo ㅁ...
+      ctx.strokeStyle = "black"
+      ctx.strokeRect(40,100,60,20)
     }
+    
   </script>
   
 </body>
