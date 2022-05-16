@@ -29,25 +29,45 @@
     console.dir(img);
     // 제대로 배경 이미지 불러옴
     //<!--! 이제 이걸 1초마다 y축에서 마이너스 방향으로 2씩 이동하게 할 것임
-    //<!--* 어라? 이거 반복이네? 반복문을 쓰면 되겠군!
-    // 핸들러 변수 
-    // 여기다 쓰면 전역 변수아니니?
-    // let topValue = "-150px
-    // let topValue = -200;
-    img.style.top= -200+ "px";
-    // 2. 내 목적 : 이벤트가 일어 났을때 img의 top 값이 바뀌는것
-    surfer.addEventListener("click", function(){
-    // topValue = topValue+500
-    let i =0;
-    let timer =  setInterval(() => {
-      i++
-      console.log(i)
-      img.style.top= -200 + i*10+ "px";
-      // 3. 이제 뭐할거냐면, 저 10을 1초에 3씩 증가시켜서 점점더 빠르게 달리도록 할 것임
-        // 1. 제대로 1씩 늘어나는 것을 확인했으니 이제 img의 좌표에 i의 변화를 적용시키자
-        // topValue = topValue+i*10;
-      }, 500);
+      //<!--* 어라? 이거 반복이네? 반복문을 쓰면 되겠군!
+        // 핸들러 변수 
+        // 여기다 쓰면 전역 변수아니니?
+        // let topValue = "-150px
+        // let topValue = -200;
+        img.style.top= -200+ "px";
+        // 2. 내 목적 : 이벤트가 일어 났을때 img의 top 값이 바뀌는것
+        
+        let value = false;
+        
+        
+        surfer.addEventListener("click", function(){
+          // 3번하기전에 일단 이벤트 스위치를 만들어 주기로함 --> 정신사나움
+          // 똑딱이 만들기 --> 왜 맨날 만들어도 안됨? 아 제발<!--! =하고 ===는 다른거라고 좀 외워라!!!!!!!!!!!!!!!
+            // <!-- ? 원하는대로 만들긴 했는데 이제 장애물에 닿았을때멈춘다 하고 골인 했을때 멈춘다 하고 방향키로 방향 조절만 하면 됨
+            // console.log("꿈이 아파 잠들지 못하는 밤") -> 이벤트는 잘된다
+            let i =0;
+            let a = 10;
+            const timer =  setInterval(function() {
+              i++
+              console.log(i)
+              
+              const  moreSpeed  =setInterval(function(){
+                a++
+                img.style.top= -200 + i*(5+a)+ "px";
+              },500)
+              
+
+              
+              
+              
+              if (i === 20){
+                clearInterval(timer);
+              }
+            }, 500);
+            // 3. 이제 뭐할거냐면, 저 10을 1초에 3씩 증가시켜서 점점더 빠르게 달리도록 할 것임
+            // 1. 제대로 1씩 늘어나는 것을 확인했으니 이제 img의 좌표에 i의 변화를 적용시키자
     })
+
     
     
 
