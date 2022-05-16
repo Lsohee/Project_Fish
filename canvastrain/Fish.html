@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="Fish" style="border: 1px solid black; width:100px; height:100px;"></canvas>
+
+  <script>
+    const fish = document.getElementById("Fish");
+
+    //<!--memo 어떻게 쓰는지는 알겠는데 감잡는게 정말 어려울듯 안그래도 일러스트의 배지어 곡선도 어려운데 이건...내가 가상의 핸들러를 상상해야하잖어.......이걸로 그림을 그리는 사람은 정말.....고였구나........
+    if(fish.getContext){
+      let ctx = fish.getContext("2d"); //<!-- ? 이게 뭘 뜻하는지는 이해가 잘안됨 
+      
+      ctx.beginPath();
+      ctx.moveTo(30,30);
+      // ctx.lineTo(30,60);
+      ctx.bezierCurveTo(40,10,10,17,60,60)
+      ctx.stroke();
+    }
+    // quadraticCurveTo
+    
+  </script>
+  
+</body>
+</html>
