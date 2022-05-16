@@ -14,14 +14,55 @@
 
     //<!--memo 어떻게 쓰는지는 알겠는데 감잡는게 정말 어려울듯 안그래도 일러스트의 배지어 곡선도 어려운데 이건...내가 가상의 핸들러를 상상해야하잖어.......이걸로 그림을 그리는 사람은 정말.....고였구나........
     if(fish.getContext){
-      let ctx = fish.getContext("2d"); //<!-- ? 이게 뭘 뜻하는지는 이해가 잘안됨 
+      let ctx = fish.getContext("2d"); //<!-- ? 이게 뭘 뜻하는지는 이해가 잘안됨 -> 그냥 2d그림을 그릴거다 라고 생각하면 되나요?
       
+    //<!--memo 생선 대가리 위
+
       ctx.beginPath();
-      ctx.moveTo(30,30);
-      // ctx.lineTo(30,60);
-      ctx.bezierCurveTo(40,10,10,17,60,60)
+      ctx.moveTo(200,60);
+      // ctx.fillStyle="black"
+      ctx.bezierCurveTo(100,20,10,100,60,100)
       ctx.stroke();
+
+    //<!--memo 생선 꼬리 위
+      ctx.beginPath();
+      ctx.moveTo(200,60);
+      ctx.lineTo(230,30);
+      ctx.stroke();
+
+      
+    //<!--memo 생선 꼬리 옆
+      ctx.beginPath();
+      ctx.moveTo(230,30);
+      ctx.lineTo(230,100);
+      ctx.stroke();
+
+      
+    //<!--memo 생선 꼬리 아래
+      ctx.beginPath();
+      ctx.moveTo(230,100);
+      ctx.lineTo(200,80);
+      ctx.stroke();
+
+    //<!--memo 생선 대가리 아래
+      ctx.beginPath();
+      ctx.moveTo(200,80);
+      // ctx.lineTo(30,60);
+      ctx.bezierCurveTo(140,100,150,100,60,100)
+      ctx.stroke();
+      
+
+    //<!--memo 생선 눈 (원)
+      ctx.beginPath();
+      ctx.arc(90,75,3,0,2 * Math.PI)
+      ctx.stroke();
+      
+
+      
+    //<!--memo 얘네 색칠하려면....어떻게 해야할까? 1. 색칠하는 법을 알고 있는 도형을 겹쳐서 원하는 모양을 만든다 2. 선만 그려도 색칠이 되는 명령어를 찾는다 -> 못..찾음...
     }
+
+
     // quadraticCurveTo
     
   </script>
