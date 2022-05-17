@@ -65,7 +65,9 @@ function component(width, height, color, x, y, type) {
     this.type = type;
     this.score = 0;
     this.width = width;
+    // 빨간상자 넓이
     this.height = height;
+    // 빨간 상자 높이
     this.speedX = 0;
     this.speedY = 0;    
     this.x = x;
@@ -74,21 +76,35 @@ function component(width, height, color, x, y, type) {
     this.gravitySpeed = 0;
     this.update = function() {
         ctx = myGameArea.context;
+        // ctx에 myGameArea.context 할당
+        
         if (this.type == "text") {
             ctx.font = this.width + " " + this.height;
+            //<!--todo canvas그리는 메서드 중에서 font찾아보기
+
             ctx.fillStyle = color;
+            // 얘는 if 문 밖으로 빼도 되지 않을까? 달라지지 않는데?
             ctx.fillText(this.text, this.x, this.y);
+            // fillText(text, x좌표, y좌표, 최대크기) 최대 크기는 옵션임
+            
         } else {
             ctx.fillStyle = color;
             ctx.fillRect(this.x, this.y, this.width, this.height);
+            // fillRect(x좌표, y좌표, 넓이, 높이)
         }
     }
+    
     this.newPos = function() {
+      // component의 newPos(새로운 위치..이동시키는 함수인가?)이라는 객체를 넣는데 그게 함수고
+      // <!--? 그러면 그냥 component{newPos:~~}하면 안되나? 
+        // <!--todo 이거 해결하게 여쭤보기
+        
         this.gravitySpeed += this.gravity;
         this.x += this.speedX;
         this.y += this.speedY + this.gravitySpeed;
         this.hitBottom();
     }
+    
     this.hitBottom = function() {
         var rockbottom = myGameArea.canvas.height - this.height;
         if (this.y > rockbottom) {
