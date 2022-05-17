@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="myMove" style="width:100px; height:300px; border:1px solid black;"></canvas>
+
+  <script>
+    const canvas = document.getElementById("myMove");
+    console.log(canvas);
+    
+    const ctx = canvas.getContext("2d");
+    // if(canvas.getContext){
+    //   console.log("true")
+    // }
+    //canvas.getContext라는 요소가 존재하는 것을 확인 
+
+
+
+    /*
+    원리 
+    한번그리고(함수 실행)
+    지우고
+    x만큼 이동후 
+    다시그림
+    반복
+    
+    순서
+    1. 함수가 실행 될때마다 화면을 초기화 (전의 실행 결과 지우기)
+    2. 사각형그리기 (나는 배경 가져오기)<!--?(장애물은 어떻게 할 지?)
+    3. 사각형이 그려질 y좌표의 증가 
+    4. 애니매이션을 담은 함수를 시간 간격을 두고 반복 호출
+    */
+      let x = 0;
+    function animate(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      // 함수가 그려질 때마다 화면을 초기화 캔버스의 너비와 높이만큼 지움
+      // <!-- todo clearRect의 매개변수가 뭐가 들어가는지 찾아보기
+
+      ctx.fillStyle = "blue" // <!-- todo 여기서 이미지를 넣을 수 있는 방법을 찾기 나는 배경 이미지를 움직이는 걸껄? 아닌가... 이젠 이것도 헷갈리네
+
+      ctx.fillRect(130,x,100,10);
+      //사각형그리기
+
+      x++;
+      if(x === 0){
+        clearInterval(animate)
+      }
+      
+    }
+
+    setInterval(animate, 50)
+    
+    
+  </script>
+  
+</body>
+</html>
