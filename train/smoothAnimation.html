@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="div1" style="width: 100px;height:100px; background-color:black; "></div>
+
+<script>
+  window.onload=function(){    
+    // window 의 onload라는 객체 값에 함수를 넣음 <!-- todo onload는 뭘까 찾아보기
+    var oDiv=document.getElementById('div1');// id
+    // oDiv라는 변수로 #div1불러오기
+    oDiv.onmouseover=function(){
+      //div에 oumouseover라는 객체에 함수를 넣음
+        startMove(10,0);//       
+        //그 함수는 startMove고 인수는 (10,0)임
+    }
+    oDiv.onmouseout=function(){
+      //div에 oumouseout라는 객체에 함수를 넣음
+        startMove(-10,-200);
+        //그 함수는 startMove고 인수는 (-10,-200)임
+    }
+}
+
+
+
+//<!--todo onmouxeover와 onmouseout에 대해 찾아보기
+
+
+
+var timer=null;
+// timer이라는 변수의 값을 null이라고 할당 <!-- ? 왜 한거임?
+
+function startMove(speed,iTarget){
+  //함수 stratMove는 speed와 iTarget을 매개 변수로 가지는데
+    clearInterval(timer);
+    // 이 함수를 작동시키면 clearInterval(timer)가 작동되고 
+    var oDiv=document.getElementById('div1');
+    //oDiv라는 변수에 #div1이라는 요소를 가지고옴 <!-- ? 이거 앞에서 전역변수로 한번더 가지고 오지 않았니
+    timer=setInterval(function(){//timer setInterval   id 
+
+        if (oDiv.offsetLeft==iTarget) {
+          //만약에 oDiv의 객체중 offsetLeft가 iTarget이라면 
+            clearInterval(timer);// 반복을 끝내주고
+        }else{ // 아니라면
+            oDiv.style.left=oDiv.offsetLeft+speed+'px';//oDiv.style.left 에 offsetLeft+speed +"px"해준 값을 대입해줘         
+        }
+    },30)//그걸 30에한번으로 반복해서 넣어줘
+}
+</script>
+</body>
+</html>
