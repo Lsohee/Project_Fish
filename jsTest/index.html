@@ -39,28 +39,28 @@
         
         let value = false;
         
+        let i =0;
+        let a = 1;
+        
         
         surfer.addEventListener("click", function(){
           // 3번하기전에 일단 이벤트 스위치를 만들어 주기로함 --> 정신사나움
           // 똑딱이 만들기 --> 왜 맨날 만들어도 안됨? 아 제발<!--! =하고 ===는 다른거라고 좀 외워라!!!!!!!!!!!!!!!
             // <!-- ? 원하는대로 만들긴 했는데 이제 장애물에 닿았을때멈춘다 하고 골인 했을때 멈춘다 하고 방향키로 방향 조절만 하면 됨
             // console.log("꿈이 아파 잠들지 못하는 밤") -> 이벤트는 잘된다
-            let i =0;
-            let a = 10;
             const timer =  setInterval(function() {
               i++
               console.log(i)
               
               const  moreSpeed  =setInterval(function(){
                 a++
-                img.style.top= -200 + i*(5+a)+ "px";
-              },500)
+                img.style.top= -200 + i*a+ "px";
+                if(i===10){
+                  clearInterval(moreSpeed);
+                }
+            },500) //이거를 reduce로 하면 좋지 않을까? -> 누적값을 더해주는 함수래
               
-
-              
-              
-              
-              if (i === 20){
+              if (i === 10){
                 clearInterval(timer);
               }
             }, 500);
