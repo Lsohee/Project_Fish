@@ -87,3 +87,9 @@ function checkKey(e) {
         2. 화면을 어둡게 하고
         3. scucess 창을 띄운다  
       }
+
+
+
+
+
+W3school 에 비슷한 느낌의 게임이 예제로 나와있어서 가져옴

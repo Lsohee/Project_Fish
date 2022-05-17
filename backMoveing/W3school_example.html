@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border: 1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+</head>
+<body onload="startGame()">
+  <!-- ? 이게 무슨뜻일까나 body tag 안에 canvas tag가 없는 것과 관련이 있을까?-->
+  
+<script>
+
+function startGame() {
+    myGameArea.start();
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+      // this.canvas -> myGameArea의 객체중 canvas를 가리킴
+        this.canvas.width = 480;
+        this.canvas.height = 270;
+        this.context = this.canvas.getContext("2d");
+      // this.contex -> myGameArea의 context를 가리킴 <!-- ? canvas의 context를 왜 myGameArea의 context로 다기 지정했을까?
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        // 문서의 body의 객체중 insertBefore
+        // <!--todo insertBefore 알아보기 
+        // <!-- ^ 요소를 지정한 태그의 앞에 삽입
+          // this.canvas를 문서의 body의 chilNodes[0]앞에 삽입
+    }
+}
+// The function startGame() invokes(부르다) the method start() of the myGameArea object.
+</script>
+
+<p>We have created a game area! (or at least an empty canvas)</p>
+
+</body>
+</html>
