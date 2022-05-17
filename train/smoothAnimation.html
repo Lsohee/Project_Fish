@@ -9,6 +9,9 @@
 <body>
   <div id="div1" style="width: 100px;height:100px; background-color:black; "></div>
 
+<!-- memo 부드러운 움직임을 주고 싶어서 에펙에서 움직임의 속도를 베지어 곡선으로 제어하듯이 자바스크립트의 애니메이션 속도도 베지어로 제어할 수 있을 것이라고 생각해서 그 방법을 찾을 것임 -->
+
+
 <script>
   window.onload=function(){    
     // window 의 onload라는 객체 값에 함수를 넣음 <!-- todo onload는 뭘까 찾아보기
@@ -16,7 +19,7 @@
     // oDiv라는 변수로 #div1불러오기
     oDiv.onmouseover=function(){
       //div에 oumouseover라는 객체에 함수를 넣음
-        startMove(10,0);//       
+        startMove(10,0);
         //그 함수는 startMove고 인수는 (10,0)임
     }
     oDiv.onmouseout=function(){
