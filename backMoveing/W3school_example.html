@@ -162,31 +162,50 @@ function component(width, height, color, x, y) {
 
 function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
-    //  지역 변수 선언
+    //  지역 변수 선언 
+    // <!--memo 변수를 이렇게도 선언하는 구나
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
+          // 만약에 myGamePiece.crashWith(myObstacles[i])가 있다면?
+          // 왜 비교 연산자가 없지? 이런 조건문은 처음 봤네
+          
             mySound.play();
             myMusic.stop();
             myGameArea.stop();
             return;
+            // return만 쓰면 이 모든 걸 밖으로 빼달라는 뜻인가?
         } 
     }
+    // i를 반복하는데 i가 myObstacles의 길이(배열개수)만큼 더함
+    // <!--?왜 ++ 가 아니고 +=인가?-->
     
     myGameArea.clear();
     // 함수를 선언?한건가? 용어를 모르겠다
 
     myGameArea.frameNo += 1;
+    // myGameArea.frameNo에 1을 더해줘
+    
     if (myGameArea.frameNo == 1 || everyinterval(150)) {
         x = myGameArea.canvas.width;
+        // 변수 x는 myGameArea.canvas.width를 할당하고 
         minHeight = 20;
         maxHeight = 200;
+        // 변수에 각각의 값 할당 
+        // <!--^ 최대 높이와 최소 높이를 지정했네-->
         height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+        // <!--?이 코드는 뭘까? 무언가를 랜덤으로 값을 정해주는 거 같은데?-->
+        
+        // <!--? Math라는 게 뭐여-->
         minGap = 50;
         maxGap = 200;
+        // 변수에 값을 할당 최대 차이와 최소차이를 정함
+        
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+
         myObstacles.push(new component(10, height, "green", x, 0));
         myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
     }
+    // 만약 myGameArea.frameNo가 1이거나 (어떤 데이터 타입이든) everyinterval(150)이라면 
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x -= 1;
         myObstacles[i].update();
