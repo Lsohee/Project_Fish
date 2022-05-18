@@ -168,7 +168,7 @@ function updateGameArea() {
         if (myGamePiece.crashWith(myObstacles[i])) {
           // 만약에 myGamePiece.crashWith(myObstacles[i])가 있다면?
           // 왜 비교 연산자가 없지? 이런 조건문은 처음 봤네
-          
+        
             mySound.play();
             myMusic.stop();
             myGameArea.stop();
@@ -196,6 +196,7 @@ function updateGameArea() {
         // <!--?이 코드는 뭘까? 무언가를 랜덤으로 값을 정해주는 거 같은데?-->
         
         // <!--? Math라는 게 뭐여-->
+        //<!--todo Math라는 게 뭔지 찾아보기 내장 메서드인것 같음-->
         minGap = 50;
         maxGap = 200;
         // 변수에 값을 할당 최대 차이와 최소차이를 정함
@@ -203,15 +204,29 @@ function updateGameArea() {
         gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
 
         myObstacles.push(new component(10, height, "green", x, 0));
+        // <!--? 오 이건 진짜로 먼소리인지 하나도 모르겠다 일단 .push가 배열 메서드였던 것 같음 마지막 배열에 넣는다 였나..?-->
         myObstacles.push(new component(10, x - height - gap, "green", x, height + gap));
+        // <!--? 자 정리를 하면 
+            // <!-- ^ 새로운 instance 함수를 myObstalces의 배열로 넣는데 -->
+            // <!-- ^ 그 instance함수는 생성자 함수가 함수 component이고  -->
+            // <!-- memo  -->
+            // <!-- ^  -->
     }
     // 만약 myGameArea.frameNo가 1이거나 (어떤 데이터 타입이든) everyinterval(150)이라면 
+
     for (i = 0; i < myObstacles.length; i += 1) {
         myObstacles[i].x -= 1;
+        // myObstacles의 배열 전부의 객체중 x의 값에 -= 1 을 한다 
+        // <!--todo 아직도 +=와 =+의 차이가 잘 감이 안옴 꼭 익힐것-->
         myObstacles[i].update();
-    }
+    } 
+    // 반복문을 돌리는 데 i에 0을 대입 ; i는 maObstacles의 길이 보다 작고 ; i+=1 해준다 
+    // <!-- ? 왜 i++ 이 아니라 i+=일까? 뭐가 다르지? -->
+    // <!-- ^ 내생각에는 그냥 옛날에는 저렇게 썼던게 아닐까? 뜻은 i++이나 i+=이나 똑같이 1씩 더해주라는 얘기같은데?-->
+
     myGamePiece.newPos();
     myGamePiece.update();
+    // <!--? 왜 이 두 메서드를 함수 updateGameArea에 넣은 것일까?-->
 }
 // 함수 updateGameArea를 선언함
 // <!-- ^ 게임 영역을 리셋하는 함수인가봐 -->
@@ -226,20 +241,40 @@ function updateGameArea() {
 
 function sound(src) {
     this.sound = document.createElement("audio");
+    // this.sound는 문서에 audio라는 새로운 요소를 생성한다
     this.sound.src = src;
+    // this.sound.src 는 src라는 ....변수인가? 
+    // <!--? 변수는 let이나 var이나 const가 있어야 선언할 수 있는거 아님?-->
+    
     this.sound.setAttribute("preload", "auto");
+    // this.sound.setAttribute라는 내장 메서드의 매개 변수에 "preload"와 "auto"라는 인수 넣음
     this.sound.setAttribute("controls", "none");
+    // this.sound.setAttribute라는 내장 메서드의 매개 변수에 "controls"와 "none"라는 인수 넣음
+    // <!--? 근데 이렇게 같은 메서드에 다른 인수를 넣으면 각각 다른 값이 나오나?-->
+
     this.sound.style.display = "none";
+    //  this.sound.style.display 는 none 값을 가짐 (안보이게 할건가봐)
+    
+
     document.body.appendChild(this.sound);
+    // 문서의 body 태그의 child로 this.sound를 넣음
+
+
     this.play = function(){
         this.sound.play();
+        // 함수 내용이 this.sound.play임
     }
+    // this.play는 함수인데
+    
     this.stop = function(){
         this.sound.pause();
+        // 그 함수 내용이 this.sound.pause임
     }    
-}
+} // this.stop이라는 건 함수 인데
+// <!--todo .sound의 메서드 찾아보기-->
 // 함수 sound를 선언하는데 매개변수가 src임
 // <!-- ^ src라고 하는 걸 보니 링크를 가져오는 건가봐-->
+// <!-- ^ sound라는 함수 이름을 보니 이거 소리를 제어하는 함수인가봐-->
 
 function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
@@ -251,37 +286,46 @@ function everyinterval(n) {
 function moveup() {
     myGamePiece.speedY = -1; 
 }
-// <!-- ^ 위로 움직이는 버튼 인가봐-->
+// <!-- ^ 위로 움직이는 함수 인가봐-->
 
 function movedown() {
     myGamePiece.speedY = 1; 
 }
-// <!-- ^ 아래로 움직이는 버튼 인가봐-->
+// <!-- ^ 아래로 움직이는 함수 인가봐-->
 
 function moveleft() {
     myGamePiece.speedX = -1; 
 }
-// <!-- ^ 왼쪽로 움직이는 버튼 인가봐-->
+// <!-- ^ 왼쪽로 움직이는 함수 인가봐-->
 
 function moveright() {
     myGamePiece.speedX = 1; 
 }
-// <!-- ^ 오른쪽으로 움직이는 버튼 인가봐-->
+// <!-- ^ 오른쪽으로 움직이는 함수 인가봐-->
 
 function clearmove() {
     myGamePiece.speedX = 0; 
     myGamePiece.speedY = 0; 
 }
+// <!--^ 움직임을 멈추는 함수 인가봐-->
 </script>
 
 
 <div style="text-align:center;width:480px;">
-  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
-  <!-- todo onmousedown이 뭔지 알아내기 -->
-  
+    <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
+    <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
+    <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
+    <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
+    <!-- todo onmousedown이 뭔지 알아내기 -->
+    <!-- * onmousedown : 마우스 버튼을 누를때 자바스트립트를 실행-->
+    <!-- * onmouseup :  마우스 버튼을 때면 자바스크립트를 실현-->
+    <!-- ? onmousedown과 onmouseup은 세트로 같이 다니는 건가? -->
+    // <!--* 마우스를 누르고 있을때 적용된 함수와 마우스를 땠을때의 적용될 함수가 각각 다름 -->
+
+  <!-- * ontouchstart : 핸드폰 터치시 이벤트 핸들러 인가봄 -->
+  <!-- ? 그러면 이거 핸드폰에서도 적용이 가능한거여? -->
+    <!-- Click the text! The mouseDown() function is triggered when the mouse button is pressed down over this paragraph, and sets the color of the text to red.
+    The mouseUp() function is triggered when the mouse button is released, and sets the color of the text to green. -->
   
 </div>
 </body>
