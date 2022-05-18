@@ -11,74 +11,158 @@ canvas {
 </style>
 </head>
 <body onload="startGame()">
+  <!-- ? onoload가 뭐일까? -->
+
+
 <script>
 
 var myGamePiece;
 var myObstacles = [];
 var mySound;
 var myMusic;
+// <!-- ? 왜 변수를 선언만 하는 걸까? -->
+// <!-- ^ 변수를 전역으로 설정하기 위해서? -->
+    // <!--todo 질문-->
+
 
 function startGame() {
+
     myGamePiece = new component(30, 30, "red", 10, 120);
     mySound = new sound("bounce.mp3");
     myMusic = new sound("gametheme.mp3");
     myMusic.play();
     myGameArea.start();
+    // <!-- ^ 위에서 설정한 변수들에 지금은 무슨 의미인지 알 수 없는 함수로 값을 할당함-->
+    
 }
+  // 함수 startGame이라는 걸 선언함 -> 
+  // <!-- ^ 게임을 시작하는 함수인가봐 -->
 
 var myGameArea = {
-    canvas : document.createElement("canvas"),
-    start : function() {
+
+
+
+  // 함수 myGameArea는 객체를 가지고 있는데,
+  canvas : document.createElement("canvas"),
+  // canvas라는 element를 문서에서 가져오고
+  start : function() {
+      // start라는 객체인데 값(이 맞는 표현인지 모르겠음) 함수이고.
         this.canvas.width = 480;
+        // myGameArea의 객체중 canvas의 속성중 width를 480로 잡음 (이거는 px로 안해도 되나?)
         this.canvas.height = 270;
+        // myGameArea의 객체중 canvas의 속성중 height를 270로 잡음 (이거는 px로 안해도 되나?)
         this.context = this.canvas.getContext("2d");
+        // myGameArea의 객체중 context를 this.canvas.getContext("2d");로 설정 
+        // <!--? context라는 객체가 없는데, 이렇게 this를 쓰면 없던 객체를 추가할수도 있나?-->
+        
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        // body라는 문서의 객체중 하나에  document.body.childNodes[0]의 앞에 this.canvas라는 요소 추가 
         this.frameNo = 0;
+        // frameNo라는 게 내장되어있는 걸까? -> 근데 myGameArea는 내가 만든 함수잖아
         this.interval = setInterval(updateGameArea, 20);
+        // interval이라는 게 내장되어있는 걸까? -> 근데 myGameArea는 내가 만든 함수잖아
+        // <!--^내 생각에는 이런식으로 this를 써서 객체를 추가할 수 있는것같음-->
     },
+
+
+
     stop : function() {
+      // stop이라는 객체로 함수가 있고
         clearInterval(this.interval);
+        //clearInterval을 가지는데 myGameArea의 객체중 this.interval를 인수로 가지고 있음 
     },    
+
     clear : function() {
+      // clear라는 요소가있는데 그거에 함수가 있음 
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        // this.context.clearRect라는 메서드에 위의 인자를 씀
+        // <!--todo .clearRect에 대해서 알아보기 (내장 메서드인것 같음)-->
     }
 }
+// 변수 myGameArea를 선언 
+// <!-- ^ 게임 영역을 설정하는 변수인가봐 -->
+
+
+
+
 
 function component(width, height, color, x, y) {
+
+
     this.width = width;
     this.height = height;
-    this.speedX = 0;
-    this.speedY = 0;    
     this.x = x;
-    this.y = y;    
+    this.y = y;
+    // this의 각각의 값에 
+    // <!--?(여기서 this는 component인가요? 그러면 그냥 평범한 객제로 넣는 것과 차이가 뭐임?)-->
+    // <!--todo 질문-->
+    
+    this.speedX = 0;
+    this.speedY = 0;
+
     this.update = function() {
-        ctx = myGameArea.context;
-        ctx.fillStyle = color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+      ctx = myGameArea.context;
+      ctx.fillStyle = color;
+      ctx.fillRect(this.x, this.y, this.width, this.height);
+      //surfer의 크기와 색지정
     }
+    // component 의 update는 함수 인데
+
+    
     this.newPos = function() {
         this.x += this.speedX;
+        // this.x에 this.speedX를 더함
         this.y += this.speedY;        
+        // this.y에 this.speedY를 더함
     }    
+    // this의 newPos은 함수 인데
+    
+    
     this.crashWith = function(otherobj) {
         var myleft = this.x;
         var myright = this.x + (this.width);
         var mytop = this.y;
         var mybottom = this.y + (this.height);
+        // surfer의 위아래왼쪽오른쪽의 값을 변수로 선언
+
+        
         var otherleft = otherobj.x;
         var otherright = otherobj.x + (otherobj.width);
         var othertop = otherobj.y;
         var otherbottom = otherobj.y + (otherobj.height);
+        // 변수 otherdbj의 위아래왼쪽오른쪽의 값을 변수로 선언
+
+        
         var crash = true;
+        // crash라는 변수에 true라는 값을 선언할당
+        
         if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+          // 만약에 
+          // (mybottom < othertop)
+          // (mytop > otherbottom)
+          // (myright < otherleft)
+          // (myleft > otherright)
+          //  이중에 하나라도 만족하면 
+
             crash = false;
+            // crash의 값을 false로 재할당
         }
         return crash;
+        // 변수 crash를 밖으로 꺼냄 
+        // <!--?이거 return하면 바로 전역 변수되는 건가?-->
     }
-}
+}// 객체 this.crashWith은 변수 otherobj를 가지는 함수임
+// 함수 component를 선언하는 데 매개변수 width, height,color,x,y를 가짐
+// <!-- ^ surfer의 위치를 지정하는 함수 인가봐 -->
+
+
+
+
+
 
 function updateGameArea() {
     var x, height, gap, minHeight, maxHeight, minGap, maxGap;
+    //  지역 변수 선언
     for (i = 0; i < myObstacles.length; i += 1) {
         if (myGamePiece.crashWith(myObstacles[i])) {
             mySound.play();
@@ -87,7 +171,10 @@ function updateGameArea() {
             return;
         } 
     }
+    
     myGameArea.clear();
+    // 함수를 선언?한건가? 용어를 모르겠다
+
     myGameArea.frameNo += 1;
     if (myGameArea.frameNo == 1 || everyinterval(150)) {
         x = myGameArea.canvas.width;
@@ -107,6 +194,16 @@ function updateGameArea() {
     myGamePiece.newPos();
     myGamePiece.update();
 }
+// 함수 updateGameArea를 선언함
+// <!-- ^ 게임 영역을 리셋하는 함수인가봐 -->
+
+
+
+
+
+
+
+
 
 function sound(src) {
     this.sound = document.createElement("audio");
@@ -122,38 +219,51 @@ function sound(src) {
         this.sound.pause();
     }    
 }
+// 함수 sound를 선언하는데 매개변수가 src임
+// <!-- ^ src라고 하는 걸 보니 링크를 가져오는 건가봐-->
 
 function everyinterval(n) {
     if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
     return false;
 }
+// 함수 everyinterval이라는 함수를 선언하는데 매개변수가 n임
+// <!-- ^ canvas를 매번 다시그리고 삭제하기를 반복하는 함수인가봐 -->
 
 function moveup() {
     myGamePiece.speedY = -1; 
 }
+// <!-- ^ 위로 움직이는 버튼 인가봐-->
 
 function movedown() {
     myGamePiece.speedY = 1; 
 }
+// <!-- ^ 아래로 움직이는 버튼 인가봐-->
 
 function moveleft() {
     myGamePiece.speedX = -1; 
 }
+// <!-- ^ 왼쪽로 움직이는 버튼 인가봐-->
 
 function moveright() {
     myGamePiece.speedX = 1; 
 }
+// <!-- ^ 오른쪽으로 움직이는 버튼 인가봐-->
 
 function clearmove() {
     myGamePiece.speedX = 0; 
     myGamePiece.speedY = 0; 
 }
 </script>
+
+
 <div style="text-align:center;width:480px;">
   <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">UP</button><br><br>
   <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()">LEFT</button>
   <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()">RIGHT</button><br><br>
   <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()">DOWN</button>
+  <!-- todo onmousedown이 뭔지 알아내기 -->
+  
+  
 </div>
 </body>
 </html>
