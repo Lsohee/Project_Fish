@@ -111,11 +111,11 @@ function updateGameArea() {
     
     gap1 = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
     
-    gap2 = Math.floor(Math.random()*(maxGap-minGap+2)+minGap);
+    // gap2 = Math.floor(Math.random()*(maxGap-minGap+2)+minGap);
     
     myObstacles.push(new component(10, height, "green", x, 0));
     myObstacles.push(new component(10, gap1, "green", x, height + gap1));
-    myObstacles.push(new component(10, x - height - gap1, "green", x, height + gap1*3));
+    myObstacles.push(new component(10, x - height - gap1-10, "blue", x, height + gap1*3));
   }
   // if (myGameArea.frameNo == 1 || everyinterval(170)) {
   //   x = myGameArea.canvas.width;
@@ -192,9 +192,9 @@ function clearmove() {
 </script>
 <div style="text-align:center;width:480px;transform: rotate(90deg);display: flex;position: relative;top: 260px;">
   <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">LEFT</button><br><br>
-  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()"style="position: relative;top:-50px;">GO</button><br><br>
-  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()"style="position: relative; top:50px; left: -40px;">BACK</button>
-  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()"style="position: relative;left: -40px;">RIGHT</button>
+  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()"style="position: relative;top:-50px;left:-15px;">GO</button><br><br>
+  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()"style="position: relative; top:50px; left: -55px;">BACK</button>
+  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()"style="position: relative;left: -80px;">RIGHT</button>
 </div>
 </body>
 </html>
