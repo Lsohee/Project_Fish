@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+</head>
+<body onload="startGame()" style="width:1000px;height:1000px;transform:rotate(270deg);position: absolute;left: 40%;" >
+  <div id="score"></div>
+<script>
+
+var myGamePiece;
+var myObstacles = [];
+
+const scoreWriting = document.getElementById("score");
+console.dir(scoreWriting);
+function startGame() {
+  myGamePiece = new component(30, 30, "red", 400, 250);
+  myScore = new component("30px", "Consolas", "black", 280, 40);
+  myGameArea.start();
+  // score();
+  
+}
+
+var myGameArea = {
+  canvas : document.createElement("canvas"),
+  start : function() {
+    this.canvas.width = 1000;
+    this.canvas.height = 570;
+    this.context = this.canvas.getContext("2d");
+    document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+    // this.canvas.x = 100;
+    this.frameNo = 0;
+    let runing = setInterval(updateGameArea, 15);
+    return runing;
+  },
+    clear : function() {
+      this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      
+    },
+    stop : function() {
+      clearInterval(runing);
+    }
+  }
+  
+  function component(width, height, color, x, y,type) {
+    this.width = width;  
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;    
+    this.update = function() {
+      ctx = myGameArea.context;
+      if (this.type == "text") {
+        ctx.font = this.width + " " + this.height;
+        ctx.fillStyle = color;
+        ctx.fillText(this.text, this.x, this.y);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
+    }
+    
+    
+    
+    
+    
+    this.newPos = function() {
+      this.x += this.speedX;
+        this.y += this.speedY;        
+      }    
+      this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+          crash = false;
+        }
+        return crash;
+      }
+}
+
+function updateGameArea() {
+  var x, height, gap1,gap2, minHeight, maxHeight, minGap, maxGap;
+  for (i = 0; i < myObstacles.length; i += 1) {
+    if (myGamePiece.crashWith(myObstacles[i])) {
+      myGameArea.stop();
+      return;
+    } 
+  }
+  myGameArea.clear();
+  myGameArea.frameNo += 1;
+  if (myGameArea.frameNo == 1 || everyinterval(150)) {
+    x = myGameArea.canvas.width;
+    minHeight = 30;
+    maxHeight = 200;
+    height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+    minGap = 40;
+    maxGap = 100;
+    
+    gap1 = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+    
+    gap2 = Math.floor(Math.random()*(maxGap-minGap+2)+minGap);
+    
+    myObstacles.push(new component(10, height, "green", x, 0));
+    myObstacles.push(new component(10, gap1, "green", x, height + gap1));
+    myObstacles.push(new component(10, x - height - gap1, "green", x, height + gap1*3));
+  }
+  // if (myGameArea.frameNo == 1 || everyinterval(170)) {
+  //   x = myGameArea.canvas.width;
+  //   minHeight = 30;
+  //   maxHeight = 100;
+  //   height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
+  //   minGap = 50;
+  //   maxGap = 100;
+    
+    
+  //   gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+  //   // myObstacles.push(new component(10, height, "green", x, 0));
+  //   myObstacles.push(new component(10, gap-10, "green", x, height + gap));
+  //   // myObstacles.push(new component(10, x - height - gap, "green", x, height + gap*3));
+  // }
+  
+  
+  
+  function score(text){
+    scoreWriting.textContent = "SCORE: "+text;
+    scoreWriting.style.transform = "rotate(90deg)"
+    scoreWriting.style.position = "absolute"
+    scoreWriting.style.top = "28px"
+    scoreWriting.style.left = "900px"
+    scoreWriting.style.fontSize = "30px"
+    
+  }
+  // <!--! 일정 점수 이상 얻으면 멈춤
+  if(myGameArea.frameNo <= 4000){
+    for(i = 0; i < myObstacles.length; i += 1) {
+      myObstacles[i].x += -1;
+      myObstacles[i].update();
+    }
+    score(myGameArea.frameNo)
+      // myScore.text = "SCORE: " + myGameArea.frameNo;
+      }else if(myGameArea.frameNo>30){
+        score("you win!")
+          clearInterval(runing)
+      //  아예 모든걸 멈추는 함수?
+
+    }
+    
+    myScore.update();
+    myGamePiece.newPos();    
+    myGamePiece.update();
+}
+
+function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+}
+
+
+function moveup() {
+    myGamePiece.speedY = -1; 
+}
+
+function movedown() {
+    myGamePiece.speedY = 1; 
+}
+
+function moveleft() {
+    myGamePiece.speedX = -1; 
+}
+
+function moveright() {
+    myGamePiece.speedX = 1; 
+}
+
+function clearmove() {
+    myGamePiece.speedX = 0; 
+    myGamePiece.speedY = 0; 
+}
+</script>
+<div style="text-align:center;width:480px;transform: rotate(90deg);display: flex;position: relative;top: 260px;">
+  <button onmousedown="moveup()" onmouseup="clearmove()" ontouchstart="moveup()">LEFT</button><br><br>
+  <button onmousedown="moveright()" onmouseup="clearmove()" ontouchstart="moveright()"style="position: relative;top:-50px;">GO</button><br><br>
+  <button onmousedown="moveleft()" onmouseup="clearmove()" ontouchstart="moveleft()"style="position: relative; top:50px; left: -40px;">BACK</button>
+  <button onmousedown="movedown()" onmouseup="clearmove()" ontouchstart="movedown()"style="position: relative;left: -40px;">RIGHT</button>
+</div>
+</body>
+</html>
