@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #root{
+      width:100vw;
+      height:100vh;
+      /* border:1px solid black; */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #container {
+      margin:30px;
+      width:105px;
+      display: flex;
+      flex-direction: column;
+    }
+    #container>div:nth-child(2) {
+      display: flex;
+      flex-direction: row;
+    }
+  </style>
+</head>
+<body onload="startGame()" >
+  <div id="root">
+  <canvas></canvas>
+  <div id="score"></div>
+  <div id="container">
+    <button>UP</button>
+    <div>
+      <button>LEFT</button>
+      <button>RIGHT</button>
+      <button>START</button>
+    </div>
+    <button>DOWN</button>
+  </div>
+</div>
+  
+<script>
+  const canvas = document.getElementsByTagName("canvas");
+  let canvasArr = Array.from(canvas);
+  let ctx=  canvasArr[0].getContext("2d");
+  let myObstacles = [];
+  var myGamePiece;
+    // <!--! 조각낸 기능들을 하나의 함수로 모음
+      frameNo = 0;
+    function startGame(){
+      myGameArea.start();
+      myGamePiece = surfer(120,500);
+    }
+
+    let myGameArea = {
+      start : function(){
+        // console.log(this);
+      // Array.from이 잘 작동했나 확인
+      // console.log(canvasArr);    
+  
+      canvasArr[0].width =400;
+      canvasArr[0].height =700;
+      canvasArr[0].style.backgroundColor ="#ccc";
+      let runing =setInterval(updateGameArea(),15);
+      return runing ;
+    },
+      clear : function(){
+        ctx.clearRect(0,0,400,700);
+      },
+      stop : function(){
+        clearInterval(runing);
+      }
+    }
+    
+    function surfer(x,y){
+      // 여기서의this는 window이나 이게 어디에 요소로 들어가는지 에 따라 달라짐
+      // 근데 이건 surfer만 하니까 this 쓰지 말자
+      // console.log(ctx);
+      // console.log(this)
+      ctx.x = x;
+      ctx.y = y;
+      ctx.speedX = 0;
+      ctx.speedY = 0;
+      ctx.beginPath();
+      ctx.moveTo(x+75, y+50);
+      ctx.lineTo(x+50, y+70);
+      ctx.lineTo(x+100,y+ 70);
+      ctx.moveTo(x+70, y+70);
+      ctx.lineTo(x+70, y+100);
+      ctx.lineTo(x+80, y+100);
+      ctx.lineTo(x+80, y+70);
+      ctx.fill();
+    //  얘를 하나로 만들 수 는 없나?
+    //  그림을 다시그리자
+    // 근데 이렇게 하면 다른 충돌 감지가 필요하겠다
+    // <!--?출동 감지를 어떻게 하면 좋을까?
+      // <!--? 충돌한다는 것을 컴퓨터는 어떻게 표현 할까?
+        // 불규칙한 모양과 충돌하는 것을 어떻게 표현해야 할까? 
+        //
+      }
+      newPos = function() {
+          ctx.x += ctx.speedX;
+          ctx.y += ctx.speedY;        
+        } 
+
+
+  
+    function component(width, height, color, x, y,type) {
+      console.log(this);
+    this.width = width;  
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;    
+    this.x = x;
+    this.y = y;    
+    
+    this.update = function() {
+      // ctx = myGameArea.context;
+      if (this.type == "text") {
+        ctx.font = this.width + " " + this.height;
+        ctx.fillStyle = color;
+        ctx.fillText(this.text, this.x, this.y);
+      } else {
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+      }
+    }
+    
+    this.newPos = function() {
+      this.x += this.speedX;
+        this.y += this.speedY;        
+      }    
+      this.crashWith = function(otherobj) {
+        var myleft = this.x;
+        var myright = this.x + (this.width);
+        var mytop = this.y;
+        var mybottom = this.y + (this.height);
+        var otherleft = otherobj.x;
+        var otherright = otherobj.x + (otherobj.width);
+        var othertop = otherobj.y;
+        var otherbottom = otherobj.y + (otherobj.height);
+        var crash = true;
+        if ((mybottom < othertop) || (mytop > otherbottom) || (myright < otherleft) || (myleft > otherright)) {
+          crash = false;
+        }
+        return crash;
+      }
+}
+
+
+
+
+    function updateGameArea(){
+      var x,width,gap,minWidth,maxWidth,minGap,maxGap;
+      
+    // for (i = 0; i < 3; i += 1) {
+    //   if (myGamePiece.crashWith(myObstacles[i])) {
+    //     myGameArea.stop();
+    //     return;
+      // } 
+      myGameArea.clear();
+      frameNo += 1;
+      // console.log(myGameArea.frameNo);
+      if(frameNo == 1 || everyinterval(150)){
+        x = canvasArr[0].width;
+        minWidth = 30;
+    maxWidth = 200;
+    minGap = 40;
+    maxGap = 100;
+    
+    width = Math.floor(Math.random()*(maxWidth-minWidth+1)+minWidth);
+    gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
+    
+    // gap2 = Math.floor(Math.random()*(maxGap-minGap+2)+minGap);
+    
+    myObstacles.push( new component( width,10, "green", 0, x));
+    myObstacles.push( new component( gap,10, "green",  width + gap,x));
+    myObstacles.push(new component(x - width - gap-10,10, "blue",width + gap*3, x ));
+    
+  }
+  // console.log(myObstacles);
+
+
+// <!--? 콘솔 검사 해봤더니 myObstacles에 배열로 안들어옴
+// <!--? myObctacles을 빈배열로 안만들고 그냥 선언만 함
+// <!--? 빈 배열로 만들었는데 안들어감 왜 안들어가지 일단 배열이 되긴 함
+// <!--? 혹시 component가 생성자 함수가 안됐나?
+// <!--todo 지금 이 component함수가 혹시 호출이 안됐거나, 생성자 함수가 아니거나
+
+      // if(myGameArea.frameNo <= 4000){
+    for(i = 0; i < myObstacles.length; i += 1) {
+      myObstacles[i].x += -1;
+      myObstacles[i].update();
+    }
+    // score(myGameArea.frameNo)
+    // myScore.text = "SCORE: " + myGameArea.frameNo;
+    // clearInterval(runing)
+      // }else if(myGameArea.frameNo>30){
+        // score("you win!")
+      //  아예 모든걸 멈추는 함수?
+
+    // }
+      newPos();  
+      surfer()  ;
+  }  
+  function everyinterval(n) {
+    if ((myGameArea.frameNo / n) % 1 == 0) {return true;}
+    return false;
+} 
+
+
+function clearmove() {
+    myGamePiece.speedX = 0; 
+    myGamePiece.speedY = 0; 
+}
+// surfer();
+    
+  </script>
+</body>
+</html>
