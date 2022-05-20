@@ -15,6 +15,8 @@ var myObstacles = [];
 
 const scoreWriting = document.getElementById("score");
 console.dir(scoreWriting);
+
+
 function startGame() {
   myGamePiece = new component(30, 30, "red", 400, 250);
   myScore = new component("30px", "Consolas", "black", 280, 40);
@@ -49,6 +51,7 @@ var myGameArea = {
   //<!--!---------------------------------------------
   function component(width, height, color, x, y,type) {
     this.width = width;  
+    // console.log(this);
     this.height = height;
     this.speedX = 0;
     this.speedY = 0;    
