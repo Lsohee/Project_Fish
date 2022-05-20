@@ -43,7 +43,10 @@ var myGameArea = {
       clearInterval(runing);
     }
   }
-  
+  //<!--!---------------------------------------------
+  //<!--!---------------------------------------------
+  //<!--!---------------------------------------------
+  //<!--!---------------------------------------------
   function component(width, height, color, x, y,type) {
     this.width = width;  
     this.height = height;
@@ -62,10 +65,6 @@ var myGameArea = {
         ctx.fillRect(this.x, this.y, this.width, this.height);
       }
     }
-    
-    
-    
-    
     
     this.newPos = function() {
       this.x += this.speedX;
@@ -87,6 +86,10 @@ var myGameArea = {
         return crash;
       }
 }
+  //<!--!---------------------------------------------
+  //<!--!---------------------------------------------
+  //<!--!---------------------------------------------
+  //<!--!---------------------------------------------
 
 function updateGameArea() {
   var x, height, gap1,gap2, minHeight, maxHeight, minGap, maxGap;
@@ -114,20 +117,6 @@ function updateGameArea() {
     myObstacles.push(new component(10, gap1, "green", x, height + gap1));
     myObstacles.push(new component(10, x - height - gap1-10, "blue", x, height + gap1*3));
   }
-  // if (myGameArea.frameNo == 1 || everyinterval(170)) {
-  //   x = myGameArea.canvas.width;
-  //   minHeight = 30;
-  //   maxHeight = 100;
-  //   height = Math.floor(Math.random()*(maxHeight-minHeight+1)+minHeight);
-  //   minGap = 50;
-  //   maxGap = 100;
-    
-    
-  //   gap = Math.floor(Math.random()*(maxGap-minGap+1)+minGap);
-  //   // myObstacles.push(new component(10, height, "green", x, 0));
-  //   myObstacles.push(new component(10, gap-10, "green", x, height + gap));
-  //   // myObstacles.push(new component(10, x - height - gap, "green", x, height + gap*3));
-  // }
   
   
   
