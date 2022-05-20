@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #root{
+      width:100vw;
+      height:100vh;
+      /* border:1px solid black; */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #container {
+      margin:30px;
+      width:105px;
+      display: flex;
+      flex-direction: column;
+    }
+    #container>div:nth-child(2) {
+      display: flex;
+      flex-direction: row;
+    }
+  </style>
+</head>
+<body onload="startGame()" >
+  <div id="root">
+  <canvas></canvas>
+  <div id="score"></div>
+  <div id="container">
+    <button>UP</button>
+    <div>
+      <button>LEFT</button>
+      <button>RIGHT</button>
+      <button>START</button>
+    </div>
+    <button>DOWN</button>
+  </div>
+</div>
+  
+  <script>
+    const canvas = document.getElementsByTagName("canvas");
+    let ctx;
+    
+    // <!--! 조각낸 기능들을 하나의 함수로 모음
+    function startGame(){
+      myGameArea.start();
+      surfer(120,500);
+    }
+
+    let myGameArea = {
+      start : function(){
+      let canvasArr = Array.from(canvas);
+      // Array.from이 잘 작동했나 확인
+      // console.log(canvasArr);    
+  
+      ctx = canvasArr[0].getContext("2d");
+      canvasArr[0].width =400;
+      canvasArr[0].height =700;
+      canvasArr[0].style.backgroundColor ="#ccc";
+      // let runing =setInterval(updateGameArea,15);
+      // return runing ;s
+      },
+      clear : function(){
+        ctx.clearRect(0,0,400,700);
+      },
+      stop : function(){
+        clearInterval(runing);
+      }
+    }
+    
+    function surfer(x,y){
+      // 여기서의this는 window이나 이게 어디에 요소로 들어가는지 에 따라 달라짐
+      // 근데 이건 surfer만 하니까 this 쓰지 말자
+      // console.log(ctx);
+      ctx.x = x;
+      ctx.y = y;
+      ctx.speedX = 0;
+      ctx.speedY = 0;
+      ctx.beginPath();
+      ctx.moveTo(x+75, y+50);
+      ctx.lineTo(x+50, y+70);
+      ctx.lineTo(x+100,y+ 70);
+      ctx.moveTo(x+70, y+70);
+      ctx.lineTo(x+70, y+100);
+      ctx.lineTo(x+80, y+100);
+      ctx.lineTo(x+80, y+70);
+      ctx.fill();
+    //  얘를 하나로 만들 수 는 없나?
+    //  그림을 다시그리자
+    this.newPos = function() {
+        ctx.x += ctx.speedX;
+        ctx.y += ctx.speedY;        
+      } 
+      // 근데 이렇게 하면 다른 충돌 감지가 필요하겠다
+      // <!--?출동 감지를 어떻게 하면 좋을까?
+        // <!--? 충돌한다는 것을 컴퓨터는 어떻게 표현 할까?
+      // 불규칙한 모양과 충돌하는 것을 어떻게 표현해야 할까? 
+      //
+    }
+
+// surfer();
+    
+  </script>
+</body>
+</html>
